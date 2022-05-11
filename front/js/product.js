@@ -75,11 +75,11 @@ function getProduct() {
     
 
     
-    
+//------------------fonction pour ajouter un produit au panier--------------------------------
 function addToCart(){
     selectButton.addEventListener("click", addToCart = () => {
         if (selectQuantity.value >= 1 && selectQuantity.value < 100 && selectColorOption.value != ""){
-            let addProduct = {
+            let addProduct = {                                                                  
                 id: getProductId,
                 name: selectTitle.textContent,
                 quantity: selectQuantity.value,
@@ -95,10 +95,9 @@ function addToCart(){
                     localStorage.data = JSON.stringify(storageData);
                 };
                 
+                //------------------------------Additionne les quantités si un produit est déjà présent dans le tableau--------------------------
                 newQuantity = () => {
-                    console.log('oui');
                     for (i = 0; i < storageData.length; i++){
-                        console.log('oui2');
                         if (storageData[i].id === getProductId && storageData[i].color === selectColorOption.value){
                             storageData[i].quantity = parseInt(storageData[i].quantity) + parseInt(selectQuantity.value);
 
@@ -109,12 +108,11 @@ function addToCart(){
             
 
                let alreadyInCart = false
-                
+                //------------------------Cherche dans le localstorage si un produit de même id et de même couleur est déjà présent--------------------------------
                 searchInCart = () => {
                     for (i = 0; i < storageData.length; i++) {
                      
                         if (storageData[i].id === getProductId && storageData[i].color === selectColorOption.value){
-                            console.log('028');
                             alreadyInCart = true;
                         
                         }
@@ -127,11 +125,11 @@ function addToCart(){
 
                     if (alreadyInCart){
                         newQuantity();
-                        console.log("produit déjà présent");
+
                     }
 
                     else{
-                        console.log('produit pas présent');
+
                         addStorageData();
                     }
                 }
@@ -139,7 +137,6 @@ function addToCart(){
                 else{
                     storageData = [];
                     addStorageData();
-                    console.log('produit pas présent2')
                 }
 
             }

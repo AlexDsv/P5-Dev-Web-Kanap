@@ -32,7 +32,7 @@ function getProduct() {
 const cartDisplay = async () =>{
   for (i = 0; i < storageData.length; i++){
     const product = await getProduct();
-    let multiplPriceQty = `${product.price}`*`${storageData[i].quantity}`
+    //let multiplPriceQty = `${product.price}`*`${storageData[i].quantity}`
   selectCart.innerHTML += `<article class="cart__item" data-id="${storageData[i].id}" data-color="${storageData[i].color}">
   <div class="cart__item__img">
     <img src="${product.imageUrl}" alt="${product.altTxt}">
@@ -41,7 +41,7 @@ const cartDisplay = async () =>{
     <div class="cart__item__content__description">
       <h2>${storageData[i].name}</h2>                                                        
       <p>${storageData[i].color}</p>
-      <p>${multiplPriceQty}€</p>
+      <p>${product.price}€</p>
     </div>
     <div class="cart__item__content__settings">
       <div class="cart__item__content__settings__quantity">
@@ -49,25 +49,18 @@ const cartDisplay = async () =>{
         <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="${storageData[i].quantity}">
       </div>
       <div class="cart__item__content__settings__delete">
-        <p class="deleteItem">Supprimer</p>
+        <p class="deleteItem" id="deleteProduct${[i]}">Supprimer</p>
       </div>
     </div>
   </div>
   </article>`
-}
-}
-
-function totalQuantity(){
-  for (i = 1; i < storageData.length; i++){
-    let totalQuantity = `${storageData[i].quantity}`+`${storageData[i--].quantity}`
-    
-    
   }
-  selectTotalQuantity.innerHTML = totalQuantity
-  
-}
-
-
+}  
 
 cartDisplay();
-//totalQuantity();
+
+
+
+
+
+
