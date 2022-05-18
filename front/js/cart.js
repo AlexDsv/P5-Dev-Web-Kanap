@@ -1,4 +1,3 @@
-i = localStorage.length
 let productInfos = localStorage.getItem('product')
 let productInfosObj = JSON.parse(productInfos)
 const selectCart = document.getElementById("cart__items")
@@ -6,6 +5,8 @@ const selectTotalPrice = document.getElementById("totalPrice")
 const selectTotalQuantity = document.getElementById("totalQuantity")
 let someProducts = [];
 let storageData = JSON.parse(localStorage.getItem("data"));
+
+
 if(localStorage.length == 0){
   emptyCart();
 }
@@ -44,7 +45,7 @@ const cartDisplay = async () =>{
   else{
   for (i = 0; i < storageData.length; i++){
     const product = await getProduct();
-    //let multiplPriceQty = `${product.price}`*`${storageData[i].quantity}`
+    let multiplPriceQty = `${product.price}`*`${storageData[i].quantity}`
   selectCart.innerHTML += `<article class="cart__item" data-id="${storageData[i].id}" data-color="${storageData[i].color}">
   <div class="cart__item__img">
     <img src="${product.imageUrl}" alt="${product.altTxt}">
@@ -53,12 +54,12 @@ const cartDisplay = async () =>{
     <div class="cart__item__content__description">
       <h2>${storageData[i].name}</h2>                                                        
       <p>${storageData[i].color}</p>
-      <p>${product.price}€</p>
+      <p class='productPrice'>${product.price}€</p>
     </div>
     <div class="cart__item__content__settings">
       <div class="cart__item__content__settings__quantity">
-        <p>Qté : ${storageData[i].quantity}</p>
-        <input type="number" class="itemQuantity" name="itemQuantity" data-id="${storageData[i].id}" data-color="${storageData[i]}}" min="1" max="100" value="${storageData[i].quantity}">
+        <p class="${storageData[i].id}">Qté : ${storageData[i].quantity}</p>
+        <input type="number" class="itemQuantity" name="itemQuantity" data-id="${storageData[i].id}" data-color="${storageData[i].color}}" min="1" max="100" value="${storageData[i].quantity}">
       </div>
       <div class="cart__item__content__settings__delete">
         <p class="deleteItem" data-id="${storageData[i].id}" data-color=${storageData[i].color}>Supprimer</p>
@@ -70,7 +71,7 @@ const cartDisplay = async () =>{
 }
 changeQuantity();
 removeProduct();
-totalCartPrice();
+//totalCartPrice();
 totalCartQuantity();
 }  
 
@@ -124,20 +125,50 @@ selectQuantityBtns.forEach((quantityBtn) => {
     console.log('ok2');
     console.log(quantityBtn.value);
     console.log(quantityBtn.dataset.id);
+    totalCartQuantity();
+    
+    
     for(i=0; i < storageData.length; i++){
-      
-        console.log('ok3');
-        return storageData[i].quantity=quantityBtn.value,
+      if(storageData[i].id == quantityBtn.dataset.id){
+      console.log('ok3');
+        
+      return storageData[i].quantity = quantityBtn.value,
         console.log(storageData[i].quantity),
         localStorage.setItem("data", JSON.stringify(storageData)),
-        (document.querySelectorAll('.cart__item__content__settings__quantity > p')[i].textContent = storageData[i].quantity)
-
+        document.querySelectorAll(`.cart__item__content__settings__quantity > p`)[i].textContent = `Qté : ${storageData[i].quantity}`;
+      }
     }
   }
-)})
+  )})
 }
 
 
-const totalCartPrice = async (cartDisplay) =>{
-  await cartDisplay
+const totalCartQuantity = async (cartDisplay,changeQuantity,
+removeProduct) =>{
+  await cartDisplay;
+  await changeQuantity;
+  await removeProduct;
+
+  console.log("ok");
+
+  let productQuantityTab = [];
+
+  for(i=0; i < storageData.length; i++){
+  let selectProductQuantity = storageData[i].quantity;
+  productQuantityTab.push(selectProductQuantity) 
 }
+
+console.log(productQuantityTab);
+selectTotalQuantity.textContent = eval(productQuantityTab.join("+"));
+return totalCartQuantity
+}
+
+const totalCartPrice = async (cartDisplay,changeQuantity,
+  removeProduct) =>{
+    await cartDisplay;
+    await changeQuantity;
+    await removeProduct;
+    
+    console.log("ok");
+  }
+  
