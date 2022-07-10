@@ -7,6 +7,8 @@ let someProducts = [];
 let storageData = JSON.parse(localStorage.getItem("data"));
 
 
+//-----------------------------------------Lien avec l'API afin de pouvoir récupérer des données si besoin-----------------------------------------
+
 if(localStorage.length == 0){
   emptyCart();
 }
@@ -37,6 +39,7 @@ function emptyCart(){
 }
 
 
+//-----------------------------------------Affichage des produits dans le panier-----------------------------------------
 
 const cartDisplay = async () =>{
   if(storageData == null){
@@ -45,7 +48,7 @@ const cartDisplay = async () =>{
   else{
   for (i = 0; i < storageData.length; i++){
     const product = await getProduct();
-    let multiplPriceQty = `${product.price}`*`${storageData[i].quantity}`
+    //let multiplPriceQty = `${product.price}`*`${storageData[i].quantity}`
   selectCart.innerHTML += `<article class="cart__item" data-id="${storageData[i].id}" data-color="${storageData[i].color}">
   <div class="cart__item__img">
     <img src="${product.imageUrl}" alt="${product.altTxt}">
@@ -71,13 +74,14 @@ const cartDisplay = async () =>{
 }
 changeQuantity();
 removeProduct();
-//totalCartPrice();
 totalCartQuantity();
+totalCartPrice();
 }  
 
 cartDisplay();
 
 
+//-----------------------------------------Supprimer un produit du panier-----------------------------------------
 
 const removeProduct = async (cartDisplay) =>{
   await cartDisplay;
@@ -111,6 +115,8 @@ const removeProduct = async (cartDisplay) =>{
 return;
 };
 
+//-----------------------------------------Modifier la quantité dans le panier-----------------------------------------
+
 const changeQuantity = async (cartDisplay) =>{
 await cartDisplay;
 console.log('ok');
@@ -126,6 +132,7 @@ selectQuantityBtns.forEach((quantityBtn) => {
     console.log(quantityBtn.value);
     console.log(quantityBtn.dataset.id);
     totalCartQuantity();
+    totalCartPrice();
     
     
     for(i=0; i < storageData.length; i++){
@@ -142,6 +149,7 @@ selectQuantityBtns.forEach((quantityBtn) => {
   )})
 }
 
+//-----------------------------------------Calcul de la quantité total du panier-----------------------------------------
 
 const totalCartQuantity = async (cartDisplay,changeQuantity,
 removeProduct) =>{
@@ -149,19 +157,20 @@ removeProduct) =>{
   await changeQuantity;
   await removeProduct;
 
-  console.log("ok");
-
+  
   let productQuantityTab = [];
-
+  
   for(i=0; i < storageData.length; i++){
-  let selectProductQuantity = storageData[i].quantity;
-  productQuantityTab.push(selectProductQuantity) 
+    let selectProductQuantity = storageData[i].quantity;
+    productQuantityTab.push(selectProductQuantity) 
+  }
+  
+  console.log(productQuantityTab);
+  selectTotalQuantity.textContent = eval(productQuantityTab.join("+"));
+  return totalCartQuantity
 }
 
-console.log(productQuantityTab);
-selectTotalQuantity.textContent = eval(productQuantityTab.join("+"));
-return totalCartQuantity
-}
+//-----------------------------------------Calcul du prix total du panier-----------------------------------------
 
 const totalCartPrice = async (cartDisplay,changeQuantity,
   removeProduct) =>{
@@ -170,5 +179,230 @@ const totalCartPrice = async (cartDisplay,changeQuantity,
     await removeProduct;
     
     console.log("ok");
+    let productPriceTab = [];
+    for(i=0; i < storageData.length; i++){
+      const product = await getProduct()
+      let selectProductPrice = `${product.price}`*`${storageData[i].quantity}`;
+      productPriceTab.push(selectProductPrice) 
+    }
+    console.log(productPriceTab);
+    selectTotalPrice.textContent = eval(productPriceTab.join("+"));
+
+    console.log("ok");
   }
   
+//-----------------------------------------Formulaire panier-----------------------------------------
+let selectFirstNameForm = document.getElementById("firstName")
+let selectLastNameForm = document.getElementById("lastName")
+let selectAddressForm = document.getElementById("address")
+let selectCityForm = document.getElementById("city")
+let selectEmailForm = document.getElementById("email")
+
+
+//-----------------------------------------RegExp Prénom-----------------------------------------
+
+console.log(selectFirstNameForm);
+selectFirstNameForm.addEventListener('change', function(){
+  firstNameValidation(this);
+});
+
+const firstNameValidation = function(inputFirstName){
+
+//RegExp pour autoriser uniquement des lettres
+  let firstNameRegExp = /^(?=.{1,50}$)[a-z]+(?:[-'_.\s][a-z]+)*$/i;
+
+  let firstNameTest = firstNameRegExp.test(inputFirstName.value)
+  
+  if(firstNameTest){
+    document.getElementById('firstNameErrorMsg').innerHTML = ""
+  }
+
+  else{
+    console.log('regexpttest');
+    document.getElementById('firstNameErrorMsg').innerHTML = "Entrez un prénom valide";
+    return(false);
+  }
+
+}
+
+
+//-----------------------------------------RegExp Nom-----------------------------------------
+
+selectLastNameForm.addEventListener('change', function(){
+  lastNameValidation(this);
+});
+
+const lastNameValidation = function(inputLastName){
+
+//RegExp pour autoriser uniquement des lettres
+  let lastNameRegExp = /^(?=.{1,50}$)[a-z]+(?:[-'_.\s][a-z]+)*$/i;
+
+  let lastNameTest = lastNameRegExp.test(inputLastName.value)
+  
+  
+  if(lastNameTest){
+    document.getElementById('lastNameErrorMsg').innerHTML = ""
+  }
+  else{
+    console.log('regexpttest');
+    document.getElementById('lastNameErrorMsg').innerHTML = "Entrez un nom valide";
+    return(false);
+  }
+
+}
+
+
+//-----------------------------------------RegExp Adresse-----------------------------------------
+
+selectAddressForm.addEventListener('change', function(){
+  addressValidation(this);
+});
+
+const addressValidation = function(inputAddress){
+
+//RegExp pour autoriser uniquement des lettres et des chiffres
+  let addressRegExp = /^[0-9*]{1,3}[-'\s]+[a-zA-Zéèêëàäçïî]+/;
+
+  let addressTest = addressRegExp.test(inputAddress.value)
+  
+  if(addressTest){
+    document.getElementById('addressErrorMsg').innerHTML = ""
+  }
+
+  else{
+    console.log('regexpttest');
+    document.getElementById('addressErrorMsg').innerHTML = "Entrez une adresse valide";
+    return(false);
+  }
+
+}
+
+
+//-----------------------------------------RegExp Ville-----------------------------------------
+
+selectCityForm.addEventListener('change', function(){
+  cityValidation(this);
+});
+
+const cityValidation = function(inputCity){
+
+//RegExp pour autoriser uniquement des lettres
+  let cityRegExp = /^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$/; 
+
+  let cityTest = cityRegExp.test(inputCity.value)
+  
+  if(cityTest){
+    document.getElementById('cityErrorMsg').innerHTML = ""
+  }
+
+  else{
+    console.log('regexpttest');
+    document.getElementById('cityErrorMsg').innerHTML = "Entrez une ville valide";
+    return(false);
+  }
+
+}
+
+
+//-----------------------------------------RegExp Email-----------------------------------------
+
+selectEmailForm.addEventListener('change', function(){
+  emailValidation(this);
+});
+
+const emailValidation = function(inputEmail){
+
+//RegExp pour autoriser uniquement des lettres
+  let emailRegExp = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/ ;
+
+  let emailTest = emailRegExp.test(inputEmail.value)
+  
+  if(emailTest){
+    document.getElementById('emailErrorMsg').innerHTML = ""
+  }
+
+  else{
+    console.log('regexpttest');
+    document.getElementById('emailErrorMsg').innerHTML = "Entrez une adresse mail valide";
+    return(false);
+  }
+
+}
+
+
+
+//-----------------------------------------Confirmation de la commande-----------------------------------------
+
+
+
+
+submitForm();
+
+function submitForm() {
+  const selectOrderBtn = document.getElementById("order");
+
+  selectOrderBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    if (localStorage.length === 0 || storageData.length === 0) {
+      alert("Veuillez ajouter un article dans votre panier");
+    } else if (
+      !selectFirstNameForm.value ||
+      !selectLastNameForm.value ||
+      !selectAddressForm.value ||
+      !selectCityForm.value ||
+      !selectEmailForm.value
+    ) {
+      alert("Veuillez remplir tous les champs du formulaire");
+    }
+    
+    if (
+      firstNameValidation(selectFirstNameForm) &&
+      lastNameValidation(selectLastNameForm) &&
+      addressValidation(selectAddressForm) &&
+      cityValidation(selectCityForm) &&
+      emailValidation(selectEmailForm) &&
+      storageData.length != 0
+      ) {
+        const order = requestContact();
+        
+        fetch("http://localhost:3000/api/products/order", {
+          method: "POST",
+          body: JSON.stringify(order),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+        .then((res) => res.json())
+        .then((data) => {
+          const orderId = data.orderId;
+          window.location.href = `./confirmation.html?orderId=${orderId}`;
+          localStorage.removeItem("data");
+        })
+        .catch((error) => {
+          "Une erreur est survenue lors de la validation de la commande";
+        });
+      }
+      console.log("okserv");
+    });
+  }
+  
+function requestContact() {
+  const productsId = [];
+  for (product of storageData) {
+    productsId.push(product.id);
+  }
+
+  const order = {
+    contact: {
+      firstName: selectFirstNameForm.value,
+      lastName: selectLastNameForm.value,
+      address: selectAddressForm.value,
+      city: selectCityForm.value,
+      email: selectEmailForm.value,
+    },
+    products: productsId,
+  };
+  
+  return order;
+}
+console.log(order);
