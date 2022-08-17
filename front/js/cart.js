@@ -206,15 +206,15 @@ selectFirstNameForm.addEventListener('change', function(){
   firstNameValidation(this);
 });
 
-const firstNameValidation = function(inputFirstName){
+const firstNameValidation = function(selectFirstNameForm){
 
 //RegExp pour autoriser uniquement des lettres
   let firstNameRegExp = /^(?=.{1,50}$)[a-z]+(?:[-'_.\s][a-z]+)*$/i;
 
-  let firstNameTest = firstNameRegExp.test(inputFirstName.value)
   
-  if(firstNameTest){
-    document.getElementById('firstNameErrorMsg').innerHTML = ""
+  if(firstNameRegExp.test(selectFirstNameForm.value)){
+    document.getElementById('firstNameErrorMsg').innerHTML = "";
+    return true;
   }
 
   else{
@@ -225,23 +225,21 @@ const firstNameValidation = function(inputFirstName){
 
 }
 
-
 //-----------------------------------------RegExp Nom-----------------------------------------
 
 selectLastNameForm.addEventListener('change', function(){
   lastNameValidation(this);
 });
 
-const lastNameValidation = function(inputLastName){
+const lastNameValidation = function(selectLastNameForm){
 
 //RegExp pour autoriser uniquement des lettres
   let lastNameRegExp = /^(?=.{1,50}$)[a-z]+(?:[-'_.\s][a-z]+)*$/i;
-
-  let lastNameTest = lastNameRegExp.test(inputLastName.value)
   
   
-  if(lastNameTest){
-    document.getElementById('lastNameErrorMsg').innerHTML = ""
+  if(lastNameRegExp.test(selectLastNameForm.value)){
+    document.getElementById('lastNameErrorMsg').innerHTML = "";
+    return true;
   }
   else{
     console.log('regexpttest');
@@ -258,15 +256,14 @@ selectAddressForm.addEventListener('change', function(){
   addressValidation(this);
 });
 
-const addressValidation = function(inputAddress){
+const addressValidation = function(selectAddressForm){
 
 //RegExp pour autoriser uniquement des lettres et des chiffres
   let addressRegExp = /^[0-9*]{1,3}[-'\s]+[a-zA-Zéèêëàäçïî]+/;
-
-  let addressTest = addressRegExp.test(inputAddress.value)
   
-  if(addressTest){
-    document.getElementById('addressErrorMsg').innerHTML = ""
+  if(addressRegExp.test(selectAddressForm.value)){
+    document.getElementById('addressErrorMsg').innerHTML = "";
+    return true;
   }
 
   else{
@@ -284,15 +281,15 @@ selectCityForm.addEventListener('change', function(){
   cityValidation(this);
 });
 
-const cityValidation = function(inputCity){
+const cityValidation = function(selectCityForm){
 
 //RegExp pour autoriser uniquement des lettres
   let cityRegExp = /^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$/; 
 
-  let cityTest = cityRegExp.test(inputCity.value)
   
-  if(cityTest){
-    document.getElementById('cityErrorMsg').innerHTML = ""
+  if(cityRegExp.test(selectCityForm.value)){
+    document.getElementById('cityErrorMsg').innerHTML = "";
+    return true;
   }
 
   else{
@@ -310,15 +307,14 @@ selectEmailForm.addEventListener('change', function(){
   emailValidation(this);
 });
 
-const emailValidation = function(inputEmail){
+const emailValidation = function(selectEmailForm){
 
 //RegExp pour autoriser uniquement des lettres
   let emailRegExp = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/ ;
-
-  let emailTest = emailRegExp.test(inputEmail.value)
   
-  if(emailTest){
-    document.getElementById('emailErrorMsg').innerHTML = ""
+  if(emailRegExp.test(selectEmailForm.value)){
+    document.getElementById('emailErrorMsg').innerHTML = "";
+    return true;
   }
 
   else{
@@ -340,9 +336,10 @@ submitForm();
 
 function submitForm() {
   const selectOrderBtn = document.getElementById("order");
-
+  
   selectOrderBtn.addEventListener("click", (e) => {
     e.preventDefault();
+  
     if (localStorage.length === 0 || storageData.length === 0) {
       alert("Veuillez ajouter un article dans votre panier");
     } else if (
@@ -363,6 +360,7 @@ function submitForm() {
       emailValidation(selectEmailForm) &&
       storageData.length != 0
       ) {
+
         const order = requestContact();
         
         fetch("http://localhost:3000/api/products/order", {
@@ -384,6 +382,7 @@ function submitForm() {
       }
       console.log("okserv");
     });
+    console.log(requestContact());
   }
   
 function requestContact() {
@@ -405,4 +404,5 @@ function requestContact() {
   
   return order;
 }
-console.log(order);
+
+console.log(firstNameValidation.value);
