@@ -140,8 +140,12 @@ function addToCart(){
                 }
 
             }
-            else{
-                alert("error");
+            else if(selectQuantity.value <= 1 && selectColorOption.value != ""){
+                alert("Veuillez indiquer un nombre d'article(s)");
+            }
+
+            else if(selectQuantity.value >= 1 && selectColorOption.value == ""){
+                alert("Veuillez sélectionner une couleur");
             }
         });
         
