@@ -121,7 +121,6 @@ const changeQuantity = async (cartDisplay) =>{
 await cartDisplay;
 console.log('ok');
 const selectQuantityBtns = document.querySelectorAll(".itemQuantity");
-
 console.log(selectQuantityBtns);
 
 selectQuantityBtns.forEach((quantityBtn) => {
@@ -130,13 +129,13 @@ selectQuantityBtns.forEach((quantityBtn) => {
   quantityBtn.addEventListener('change', () => {
     console.log('ok2');
     console.log(quantityBtn.value);
-    console.log(quantityBtn.dataset.id);
+    console.log(quantityBtn.dataset.color.replace(/}/g, ''))
     totalCartQuantity();
     totalCartPrice();
     
     
     for(i=0; i < storageData.length; i++){
-      if(storageData[i].id == quantityBtn.dataset.id){
+      if(storageData[i].id == quantityBtn.dataset.id && storageData[i].color == quantityBtn.dataset.color.replace(/}/g, '')){
       console.log('ok3');
         
       return storageData[i].quantity = quantityBtn.value,
