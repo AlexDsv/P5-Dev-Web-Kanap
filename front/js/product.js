@@ -154,93 +154,23 @@ function addToCart(){
 
 
 
+const selectCartQty = document.getElementById("cartQuantity");
+const totalCartQuantity = () =>{
+    let storageData = JSON.parse(localStorage.getItem("data"));
+    let productQuantityTab = [];
+  for(i=0; i < storageData.length; i++){
+    let selectProductQuantity = storageData[i].quantity;
+    productQuantityTab.push(selectProductQuantity) 
+  }
+  console.log(storageData.length);
+  console.log(productQuantityTab);
+  selectCartQty.textContent +=  " (" + eval(productQuantityTab.join("+")) + ")";
+  return totalCartQuantity
+}
 
+console.log(localStorage.length);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    //Ajouter un produit au panier
-    /*const setProductInfos = async () => {
-        const infos = await getProduct()
-        localStorage.setItem('product' +i, JSON.stringify(infos))
-        localStorage.setItem('colorValue' +i, selectColorOption.value)
-        localStorage.setItem('quantity' +i, selectQuantity.value)
-        
-
-    
-    };
-    
-    const addToCart = async () => {
-        const infos = await getProduct()
-        if("product" in localStorage){                                    //Si une ligne product existe dans LocalStorage alors
-            localStorage.setItem('product'+ ++i, JSON.stringify(infos))   //Crée une ligne product1 contenant les données du produit de la page produit actuelle
-            localStorage.setItem('colorValue'+i, selectColorOption.value) //Crée une ligne colorValue1 contenant la couleur choisie pour le produit actuel
-            localStorage.setItem('quantity'+i, selectQuantity.value)      //Crée une ligne quantity1 contenant la quantité choisie pour le produit actuel
-        
-    }
-        else if(productInfosObj != null && getProductId == productInfosObj._id && selectColorOption.value == localStorage.getItem('colorValue'+i, selectColorOption.value)){
-            sameProductToCart()
-    }
-        else if(productInfosObj != null && getProductId == productInfosObj._id && selectColorOption.value != localStorage.getItem('colorValue'+i, selectColorOption.value)){
-            localStorage.setItem('product'+ ++i, JSON.stringify(infos))   
-            localStorage.setItem('colorValue'+i, selectColorOption.value) 
-            localStorage.setItem('quantity'+i, selectQuantity.value)
-    }
-    //Si
-    
-        else{
-            localStorage.setItem('product'+ ++i, JSON.stringify(infos))   //Crée une ligne product1 contenant les données du produit de la page produit actuelle
-            localStorage.setItem('colorValue'+i, selectColorOption.value) //Crée une ligne colorValue1 contenant la couleur choisie pour le produit actuel
-            localStorage.setItem('quantity'+i, selectQuantity.value)
-        
-    }
-    }
-
-    function sameProductToCart(){
-        localStorage.setItem('quantity' +i, parseInt(localStorage.getItem('quantity'+i, selectQuantity.value))+parseInt(selectQuantity.value));
-    
-    }*/
-    
-        
-
-    
-
-
+totalCartQuantity()
 
 
     

@@ -42,3 +42,22 @@ const itemsPartSelector = document.getElementById("items");   //Variabe pour sel
         </article>
         </a> `;
     }
+
+    //Affichage du nombre d'article(s) dans le panier entre parenthèses
+    const selectCartQty = document.getElementById("cartQuantity");
+    const totalCartQuantity = () =>{
+        let storageData = JSON.parse(localStorage.getItem("data"));
+        let productQuantityTab = [];
+      for(i=0; i < storageData.length; i++){
+        let selectProductQuantity = storageData[i].quantity;
+        productQuantityTab.push(selectProductQuantity) 
+      }
+      console.log(storageData.length);
+      console.log(productQuantityTab);
+      selectCartQty.textContent +=  " (" + eval(productQuantityTab.join("+")) + ")";
+      return totalCartQuantity
+    }
+    
+    console.log(localStorage.length);
+    
+    totalCartQuantity()

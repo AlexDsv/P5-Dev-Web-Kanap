@@ -150,6 +150,7 @@ selectQuantityBtns.forEach((quantityBtn) => {
 
 //-----------------------------------------Calcul de la quantité total du panier-----------------------------------------
 
+const selectCartQty = document.getElementById("cartQuantity");
 const totalCartQuantity = async (cartDisplay,changeQuantity,
 removeProduct) =>{
   await cartDisplay;
@@ -166,6 +167,7 @@ removeProduct) =>{
   
   console.log(productQuantityTab);
   selectTotalQuantity.textContent = eval(productQuantityTab.join("+"));
+  selectCartQty.textContent +=  " (" + eval(productQuantityTab.join("+")) + ")";
   return totalCartQuantity
 }
 
@@ -208,7 +210,7 @@ selectFirstNameForm.addEventListener('change', function(){
 const firstNameValidation = function(selectFirstNameForm){
 
 //RegExp pour autoriser uniquement des lettres
-  let firstNameRegExp = /^(?=.{1,50}$)[a-z]+(?:[-'_.\s][a-z]+)*$/i;
+  let firstNameRegExp = /^(?=.{1,50}$)[a-zàâçéèêëîïôûùüÿñæœ -]+(?:[-'_.\s][a-zàâçéèêëîïôûùüÿñæœ -]+)*$/i;
 
   
   if(firstNameRegExp.test(selectFirstNameForm.value)){
@@ -233,7 +235,7 @@ selectLastNameForm.addEventListener('change', function(){
 const lastNameValidation = function(selectLastNameForm){
 
 //RegExp pour autoriser uniquement des lettres
-  let lastNameRegExp = /^(?=.{1,50}$)[a-z]+(?:[-'_.\s][a-z]+)*$/i;
+  let lastNameRegExp = /^(?=.{1,50}$)[a-zàâçéèêëîïôûùüÿñæœ -]+(?:[-'_.\s][a-zàâçéèêëîïôûùüÿñæœ -]+)*$/i;
   
   
   if(lastNameRegExp.test(selectLastNameForm.value)){
@@ -258,7 +260,7 @@ selectAddressForm.addEventListener('change', function(){
 const addressValidation = function(selectAddressForm){
 
 //RegExp pour autoriser uniquement des lettres et des chiffres
-  let addressRegExp = /^[0-9*]{1,3}[-'\s]+[a-zA-Zéèêëàäçïî]+/;
+  let addressRegExp = /^[0-9*]{1,3}[-'\s]+[a-zàâçéèêëîïôûùüÿñæœ -]+/;
   
   if(addressRegExp.test(selectAddressForm.value)){
     document.getElementById('addressErrorMsg').innerHTML = "";
@@ -283,7 +285,7 @@ selectCityForm.addEventListener('change', function(){
 const cityValidation = function(selectCityForm){
 
 //RegExp pour autoriser uniquement des lettres
-  let cityRegExp = /^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$/; 
+  let cityRegExp = /^[a-zA-Zàâçéèêëîïôûùüÿñæœ]+(?:[\s-][a-zA-Zàâçéèêëîïôûùüÿñæœ]+)*$/; 
 
   
   if(cityRegExp.test(selectCityForm.value)){
@@ -404,4 +406,4 @@ function requestContact() {
   return order;
 }
 
-console.log(firstNameValidation.value);
+console.log(localStorage.length)
