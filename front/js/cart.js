@@ -384,7 +384,7 @@ function submitForm() {
       console.log("okserv");
     });
     console.log(requestContact());
-  }
+} 
   
 function requestContact() {
   const productsId = [];
