@@ -3,6 +3,7 @@ let productInfosObj = JSON.parse(productInfos)
 const selectCart = document.getElementById("cart__items")
 const selectTotalPrice = document.getElementById("totalPrice")
 const selectTotalQuantity = document.getElementById("totalQuantity")
+const selectCartTotalQuantity = document.getElementById("totalQuantity2")
 let someProducts = [];
 let storageData = JSON.parse(localStorage.getItem("data"));
 
@@ -167,7 +168,7 @@ removeProduct) =>{
   
   console.log(productQuantityTab);
   selectTotalQuantity.textContent = eval(productQuantityTab.join("+"));
-  selectCartQty.textContent +=  " (" + eval(productQuantityTab.join("+")) + ")";
+  selectCartTotalQuantity.textContent = eval(productQuantityTab.join("+"));
   return totalCartQuantity
 }
 

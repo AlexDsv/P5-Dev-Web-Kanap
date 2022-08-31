@@ -125,12 +125,14 @@ function addToCart(){
 
                     if (alreadyInCart){
                         newQuantity();
+                        location.reload();
 
                     }
 
                     else{
 
                         addStorageData();
+                        location.reload();
                     }
                 }
 

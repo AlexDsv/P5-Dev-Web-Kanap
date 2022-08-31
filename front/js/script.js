@@ -56,6 +56,7 @@ const itemsPartSelector = document.getElementById("items");   //Variabe pour sel
       console.log(productQuantityTab);
       selectCartQty.textContent +=  " (" + eval(productQuantityTab.join("+")) + ")";
       return totalCartQuantity
+      
     }
     
     console.log(localStorage.length);
